@@ -50,7 +50,14 @@ Gitdown::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => "welcome#index"
   
-  root :to => "pages/welcome"
+  resources :pages
+  
+  match '/edit/:page_name' => "pages#edit"
+  match '/:page_name' => "pages#show"
+  
+
+  
+  root :to => "pages#index"
 
   # See how all your routes lay out with "rake routes"
 
