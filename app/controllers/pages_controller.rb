@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   
   def create
     @wiki = Wiki.new(params[:wiki])
-    @data =  gollum.page(@wiki.name)
+    @data =  Wiki.find(@wiki.name)
     begin
       gollum.write_page(@wiki.name, :markdown, @wiki.content)
       redirect_to "/#{CGI.escape(@wiki.name)}"
@@ -27,20 +27,20 @@ class PagesController < ApplicationController
   end
   
   def edit
-    gollum_wiki = gollum.page(params[:page_name])
-    @data =  gollum.page(params[:page_name])
+    gollum_wiki = Wiki.find(params[:page_name])
+    @data =  Wiki.find(params[:page_name])
     @wiki = Wiki.new(:name => params[:page_name], :content => @data.raw_data)
   end
   
   def index
-    @data = gollum.page('Home')
+    @data = Wiki.find('Home')
     render :action => :show
   end
   
   protected
   
   def find_data
-    @data =  gollum.page(params[:page_name]) || gollum.page(params[:id])
+    @data =  Wiki.find(params[:page_name]) || Wiki.find(params[:id])
   end
   
 end
