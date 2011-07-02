@@ -1,7 +1,7 @@
 class Wiki
   include ActiveModel::AttributeMethods
 
-  attr_accessor :name, :raw_data, :formatted_data
+  attr_accessor :name, :raw_data, :formatted_data, :title
   
   DATA = Gollum::Wiki.new("/Users/xdite/Dropbox/projects/rails-102")
 
@@ -14,7 +14,7 @@ class Wiki
   def self.find(name)
     data = DATA.page(name)
     if data
-      new :name => data.name, :raw_data => data.raw_data, :formatted_data => data.formatted_data
+      new :name => data.name, :raw_data => data.raw_data, :formatted_data => data.formatted_data, :title => data.title
     end
   end
   

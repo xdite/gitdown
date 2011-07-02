@@ -6,7 +6,7 @@
   <!--[if IE 7]>
   <link rel="stylesheet" type="text/css" href="/css/ie7.css" media="all">
   <![endif]--> 
-  <title>Home</title> 
+  <%= render_page_title %>
   <%= stylesheet_link_tag "gollum", "editor", "dialog", "template" %>
   <%= javascript_include_tag "jquery", "gollum", "gollum.dialog", "gollum.placeholder", "gollum.editor" %>
   <%= csrf_meta_tag %>
@@ -15,13 +15,13 @@
  
 <div id="wiki-wrapper" class="page"> 
 <div id="head"> 
-  <h1>Home</h1> 
+  <h1><%= render_page_name %></h1> 
   <ul class="actions"> 
     <li class="minibutton"><a href="/pages"
       class="action-all-pages">All Pages</a></li> 
     <li class="minibutton" class="jaws"> 
       <a href="#" id="minibutton-new-page">New Page</a></li> 
-    <li class="minibutton"><a href="/edit/Home"
+    <li class="minibutton"><a href="/edit/<%= params[:page_name] || 'Home' %>"
        class="action-edit-page">Edit Page</a></li> 
     <li class="minibutton"><a href="/history/Home"
        class="action-page-history">Page History</a></li> 

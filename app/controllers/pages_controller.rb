@@ -3,9 +3,13 @@ class PagesController < ApplicationController
   before_filter :find_data, :only => [:show,:update, :edit]
   
   def show
+    
     unless @data
       @wiki = Wiki.new(:name => params[:page_name])
+      @page_title = "Create New Page"
       render :new
+    else
+      @page_title = @data.title
     end
   end
   
@@ -28,10 +32,12 @@ class PagesController < ApplicationController
   end
   
   def new
+
   end
   
   def edit
     @wiki = Wiki.find(params[:page_name]) 
+    @page_title = "Editing #{@wiki.title}"
   end
   
   def index

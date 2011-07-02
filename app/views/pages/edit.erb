@@ -1,4 +1,3 @@
-EDIT
 <%= form_for :wiki, :url => page_path(@wiki.name), :html => { :method => :put }  do |f| -%>
     <%= f.hidden_field :name %>
     <%= f.text_area :raw_data %>
