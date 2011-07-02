@@ -1,8 +1,7 @@
 class Wiki
   include ActiveModel::AttributeMethods
 
-  attr_accessor :name
-  attr_accessor :content
+  attr_accessor :name, :raw_data, :formatted_data
   
   DATA = Gollum::Wiki.new("/Users/xdite/Dropbox/projects/rails-102")
 
@@ -12,8 +11,18 @@ class Wiki
     end
   end
   
-  def self.find(id)
-    DATA.page(id)
+  def self.find(name)
+    data = DATA.page(name)
+    if data
+      new :name => data.name, :raw_data => data.raw_data, :formatted_data => data.formatted_data
+    end
+  end
+  
+  def update_attributes(hash)
+    name = hash[:name]
+    raw_data = hash[:raw_data]
+    data = DATA.page(name)
+    DATA.update_page(data, name,:markdown, raw_data)
   end
 
 end

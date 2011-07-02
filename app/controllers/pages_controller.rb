@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   
-  before_filter :find_data
+  before_filter :find_data, :only => [:show,:update, :edit]
   
   def show
     unless @data
@@ -10,9 +10,11 @@ class PagesController < ApplicationController
   end
   
   def update
-    @wiki = Wiki.new(params[:wiki])
-    gollum.update_page(@data, @wiki.name,:markdown,@wiki.content)
-    redirect_to "/#{CGI.escape(@wiki.name)}"
+    if @data.update_attributes(params[:wiki])
+      redirect_to "/#{CGI.escape(@data.name)}"
+    else
+      render :edit
+    end
   end
   
   def create
@@ -27,9 +29,7 @@ class PagesController < ApplicationController
   end
   
   def edit
-    gollum_wiki = Wiki.find(params[:page_name])
-    @data =  Wiki.find(params[:page_name])
-    @wiki = Wiki.new(:name => params[:page_name], :content => @data.raw_data)
+    @wiki = Wiki.find(params[:page_name]) 
   end
   
   def index
