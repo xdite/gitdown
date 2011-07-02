@@ -1,16 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Gitdown</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8"> 
+
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="/css/ie7.css" media="all">
+  <![endif]--> 
+  <title>Home</title> 
+  <%= stylesheet_link_tag "gollum", "editor", "dialog", "template" %>
+  <%= javascript_include_tag "jquery", "gollum", "gollum.dialog", "gollum.placeholder", "gollum.editor" %>
   <%= csrf_meta_tag %>
-</head>
-<body>
-
-<%= render :partial => "common/navigation"%>
-
-<%= yield %>
-
-</body>
+</head> 
+<body> 
+ 
+<div id="wiki-wrapper" class="page"> 
+<div id="head"> 
+  <h1>Home</h1> 
+  <ul class="actions"> 
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li> 
+    <li class="minibutton" class="jaws"> 
+      <a href="#" id="minibutton-new-page">New Page</a></li> 
+    <li class="minibutton"><a href="/edit/Home"
+       class="action-edit-page">Edit Page</a></li> 
+    <li class="minibutton"><a href="/history/Home"
+       class="action-page-history">Page History</a></li> 
+  </ul> 
+  <div id="searchbar"> 
+    <form action="/search" method="get" id="search-form"> 
+    <div id="searchbar-fauxtext"> 
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off"> 
+      <a href="#" id="search-submit" title="Search this wiki"> 
+        <span>Search</span> 
+      </a> 
+    </div> 
+    </form> 
+  </div></div> 
+<div id="wiki-content"> 
+  <div class="wrap"> 
+  <div id="wiki-body" class="gollum-markdown-content"> 
+    <div id="template"> 
+        <%= yield %>
+    </div> 
+  </div> 
+  </div> 
+ 
+</div> 
+<div id="footer"> 
+  <p id="last-edit">Last edited by <b>xdite</b>, 2011-07-03 00:29:11</p> 
+</div> 
+</div> 
+ 
+<script type="text/javascript" src="/javascript/MathJax/MathJax.js"></script> 
+ 
+ 
+</body> 
 </html>
