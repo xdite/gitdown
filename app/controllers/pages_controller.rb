@@ -1,16 +1,15 @@
 class PagesController < ApplicationController
   
+  before_filter :find_data
+  
   def show
-    @data =  gollum.page(params[:page_name]) || gollum.page(params[:id])
     unless @data
       @wiki = Wiki.new(:name => params[:page_name])
       render :new
     end
-    
   end
   
   def update
-    @data =  gollum.page(params[:page_name]) || gollum.page(params[:id])
     @wiki = Wiki.new(params[:wiki])
     gollum.update_page(@data, @wiki.name,:markdown,@wiki.content)
     redirect_to "/#{CGI.escape(@wiki.name)}"
@@ -36,6 +35,12 @@ class PagesController < ApplicationController
   def index
     @data = gollum.page('Home')
     render :action => :show
+  end
+  
+  protected
+  
+  def find_data
+    @data =  gollum.page(params[:page_name]) || gollum.page(params[:id])
   end
   
 end
