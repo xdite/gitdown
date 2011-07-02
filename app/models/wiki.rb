@@ -24,5 +24,9 @@ class Wiki
     data = DATA.page(name)
     DATA.update_page(data, name,:markdown, raw_data)
   end
-
+  
+  def save
+    DATA.write_page(name, :markdown, raw_data)
+  end
+  
 end

@@ -19,13 +19,15 @@ class PagesController < ApplicationController
   
   def create
     @wiki = Wiki.new(params[:wiki])
-    @data =  Wiki.find(@wiki.name)
     begin
-      gollum.write_page(@wiki.name, :markdown, @wiki.content)
+      @wiki.save
       redirect_to "/#{CGI.escape(@wiki.name)}"
     rescue Gollum::DuplicatePageError => e
       render :text => "Duplicate page: #{e.message}"
     end
+  end
+  
+  def new
   end
   
   def edit
@@ -33,6 +35,10 @@ class PagesController < ApplicationController
   end
   
   def index
+  
+  end
+  
+  def welcome
     @data = Wiki.find('Home')
     render :action => :show
   end
