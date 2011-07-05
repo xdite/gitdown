@@ -3,7 +3,7 @@ class Wiki
 
   attr_accessor :name, :raw_data, :formatted_data, :title
   
-  DATA = Gollum::Wiki.new("/Users/xdite/Dropbox/projects/rails-102")
+  DATA = Gollum::Wiki.new(Settings.repo)
 
   def initialize(attributes = {})
     if attributes.present?

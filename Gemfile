@@ -9,6 +9,7 @@ gem "handicraft_helper",:git => "git://github.com/handlino/handicraft_helper.git
 gem 'sqlite3'
 gem 'gollum', :require => "gollum"
 gem "rdiscount", :require => "rdiscount"
+gem "settingslogic"
 
 # Use unicorn as the web server
 # gem 'unicorn'

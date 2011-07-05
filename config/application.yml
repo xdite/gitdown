@@ -1,0 +1,12 @@
+defaults: &defaults
+   repo : "/Users/xdite/Dropbox/gitbook-002-self-publishing"
+   
+development:
+  <<: *defaults
+  neat_setting: 800
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
