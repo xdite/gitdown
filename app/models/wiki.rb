@@ -19,7 +19,6 @@ class Wiki
   end
   
   def update_attributes(hash)
-    name = hash[:name]
     raw_data = hash[:raw_data]
     data = DATA.page(name)
     DATA.update_page(data, name,:markdown, raw_data)

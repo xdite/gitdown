@@ -1,5 +1,40 @@
-<%= form_for :wiki, :url => page_path(@wiki.name), :html => { :method => :put }  do |f| -%>
-    <%= f.hidden_field :name %>
-    <%= f.text_area :raw_data %>
-    <%= f.submit "Submit", :disable_with => 'Submiting...' %>
-<% end -%>
+<div id="edit-panel"> 
+   <%= form_for :wiki, :url => page_path(params[:page_name]), :html => { :method => :put }  do |f| -%>
+      <h2><%= @data.title%></h2>
+      <%= f.text_area :raw_data, :class => "pane" , :cols => 80, :row => 20, :style => "height: 471px;" %>
+      <%= f.submit "Submit", :disable_with => 'Submiting...' %>
+    <% end %>
+</div> 
+
+<div id="preview-panel" > 
+    <div class="paneHeader"> 
+        <span>
+            <select id="paneSetting"> 
+                <option value="previewPane">Preview</option> 
+                <option value="outputPane">HTML Output</option> 
+                <option value="syntaxPane">Syntax Guide</option> 
+            </select>
+        </span>
+        <span id="convertTextControls"> 
+            <button id="convertTextButton" type="button" title="Convert text now">Convert text</button> 
+            <select id="convertTextSetting"> 
+                <option value="delayed">in the background</option> 
+                <option value="continuous">every keystroke</option> 
+                <option value="manual">manually</option> 
+            </select> 
+            
+        </span>
+    </div> 
+
+    <%= render :partial => "output_pane"%>
+    <%= render :partial => "preview_pane" %>
+    <%= render :partial => "syntax_pane"%>
+</div>
+
+<% content_for(:footer) do %>
+    <div id="processingTime" title="Last processing time">0 ms</div>
+<% end %>
+
+<% content_for(:page_specific_javascript) do %>
+
+<% end %>

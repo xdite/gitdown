@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     unless @data
       @wiki = Wiki.new(:name => params[:page_name])
       @page_title = "Create New Page"
-      render :new
+      render :new, :layout => "editor"
     else
       @page_title = @data.title
     end
@@ -15,7 +15,7 @@ class PagesController < ApplicationController
   
   def update
     if @data.update_attributes(params[:wiki])
-      redirect_to "/#{CGI.escape(@data.name)}"
+      redirect_to "/#{params[:id]}"
     else
       render :edit
     end
@@ -38,6 +38,8 @@ class PagesController < ApplicationController
   def edit
     @wiki = Wiki.find(params[:page_name]) 
     @page_title = "Editing #{@wiki.title}"
+    
+    render :layout => "editor"
   end
   
   def index
@@ -46,6 +48,7 @@ class PagesController < ApplicationController
   
   def welcome
     @data = Wiki.find('Home')
+    @page_title = @data.title
     render :action => :show
   end
   

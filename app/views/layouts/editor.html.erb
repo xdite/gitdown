@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title>MarkEdit Basic Example</title>
+    <%= stylesheet_link_tag "jquery.markedit.css", "jquery-ui.css", "editor-markdown.css" %>
+    <%= csrf_meta_tag %>
+     <%= javascript_include_tag "jquery.js", "jquery-ui.min", "jquery.a-tools-1.5.2.min", "showdown", "showdown-gui"  %>
+     <%= javascript_include_tag "jquery.markedit"%>
+ 
+     <style type="text/css">
+         .markedit { width: 100%; }
+         .markedit-toolbar{ width: 99.8%;}
+         .gallery { font-size: 0.75em; }
+         .gallery span { margin-right: 20px; }
+         .gallery button { margin-left: 10px; }
+         .gallery input { width: 50%; }
+         .gallery .results { overflow: auto; margin-top: 20px; }
+         .gallery .results a { margin: 15px; }
+     </style>
+     
+    <script type="text/javascript">
+
+        // Create a MarkEdit editor on page load
+        $(function(){
+
+          $('#edit-panel textarea').markedit({
+              'preview' : false,
+
+              'toolbar' : {
+                   'layout' : 'bold italic | link quote code flickr-gallery | numberlist bulletlist heading line',
+                   'buttons' : [
+                       { 'id':'flickr-gallery', 'tip':'Insert Flickr Image', 'css':'image', 'click': showUploadDialog }
+                   ]
+               }
+          });
+            
+           function showUploadDialog(){
+               $('.gallery').dialog("open");
+               return true;
+           }
+                // Create dialog to show user
+                var win = $(".gallery");
+                
+                $(win).dialog({
+                    'autoOpen': false,  
+                    'bgiframe': true,
+                    'title': 'Upload Pictures',
+                    'closeOnEscape': true,
+                    'height': 500,
+                    'width': 850,
+                    close: function(){
+                        $('.gallery').show();
+                    },
+                });
+                
+                $(".image-upload").click(function(){
+                  var block = $(this).parent().parent().attr("id");
+                  window.open('/attached_images/new','ImageUpload','height=400,width=260,menubar=no,toolbar=no,scrollbars=yes');
+                });
+                
+                $(".image-batch-upload").click(function(){
+                  var block = $(this).parent().parent().attr("id");
+                  window.open('/attached_images/batch','ImageUpload','height=260,width=280,menubar=no,toolbar=no')
+                });
+                
+                $("#show_upload_detail").live('click', function(){
+                  var div = $("div#uploaded_images #upload_detail");
+                  if (div.is(":hidden")) {
+                    div.show();
+                    $(this).text("隱藏");
+                  }else{
+                    div.hide();
+                    $(this).text("細節");
+                  }
+
+                });
+                
+                $(".insert_image").live("click", function(){
+                  var textarea = $("#edit-panel textarea");
+                  var image_src = $(this).attr("data-url");
+                  var image_url = "<img src=\"" + image_src + "\" class=\"single-content-image\">";
+                 // var cursor = textarea.getSelection();
+                  
+                  textarea.markeditSetLinkOrImage(true, image_src , 'pic');
+                  
+                  // This one fail at ie8
+                  //textarea.focus().setSelection(cursor.start, cursor.end).replaceSelectedText(image_url);
+                  // This one work use plugin jquery.a-tools-1.5.2.min
+                  //textarea.focus().insertAtCaretPos(image_url);
+                  return false;
+                });                      
+      
+        });
+
+    </script>
+</head>
+<body>
+  <div id="container">
+    <div id="header">
+    </div>    
+    <div id="content">
+        <%= yield %>
+    </div>
+    
+    <div class="gallery" style="display: none;">
+        <%# render("editors/upload_images") %>
+    </div>
+    
+  </div>
+  <div id="footer">
+     <%= yield(:footer) %>
+  </div>
+
+  <%= yield :page_specific_javascript %>
+</html>
